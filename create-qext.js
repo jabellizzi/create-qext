@@ -59,10 +59,10 @@ function installDependencies() {
 
 function copySourceFiles(serverEnvironment) {
   if(serverEnvironment){
-    fs.copySync(path.resolve(__dirname, './src_files'), `./${extensionName}/src`);
+    fs.copySync(path.resolve(__dirname, './server-source'), `./${extensionName}/src`);
     fs.copySync(path.resolve(__dirname, './config'), `./${extensionName}/config`);
   } else {
-    fs.copySync(path.resolve(__dirname, './src_files'), `./${extensionName}`);
+    fs.copySync(path.resolve(__dirname, './desktop-source'), `./${extensionName}`);
     fs.renameSync(`./${extensionName}/index.qext`, `./${extensionName}/${extensionName}.qext`);
     fs.renameSync(`./${extensionName}/index.js`, `./${extensionName}/${extensionName}.js`);
   }
