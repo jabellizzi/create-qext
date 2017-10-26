@@ -4,7 +4,11 @@
 
 ### Create
 
+#### Desktop
 `create-qext my-extension`
+
+#### Server
+`create-qext my-extension --server`
 
 `cd my-extension`
 
