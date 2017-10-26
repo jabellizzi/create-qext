@@ -3,6 +3,12 @@
 const fs = require('fs-extra');
 const path = require('path');
 const childProcess = require('child_process');
+const program = require('commander');
+
+program
+  .version('0.1.0')
+  .option('-s, --server', 'Server Environment')
+  .parse(process.argv);
 
 // Delete 0 and 1 argument
 var args = process.argv.splice(process.execArgv.length + 2);
@@ -10,9 +16,11 @@ var args = process.argv.splice(process.execArgv.length + 2);
 // Retrieve first argument
 var extensionName = args[0];
 
-createPackage(extensionName);
-installDependencies();
-copySourceFiles();
+if(program.server) {
+  createPackage(extensionName);
+  installDependencies();
+}
+copySourceFiles(program.server);
 
 
 function createPackage(extensionName) {
@@ -49,7 +57,13 @@ function installDependencies() {
 }
 
 
-function copySourceFiles() {
-  fs.copySync(path.resolve(__dirname, './src_files'), `./${extensionName}/src`);
-  fs.copySync(path.resolve(__dirname, './config'), `./${extensionName}/config`);
+function copySourceFiles(serverEnvironment) {
+  if(serverEnvironment){
+    fs.copySync(path.resolve(__dirname, './src_files'), `./${extensionName}/src`);
+    fs.copySync(path.resolve(__dirname, './config'), `./${extensionName}/config`);
+  } else {
+    fs.copySync(path.resolve(__dirname, './src_files'), `./${extensionName}`);
+    fs.renameSync(`./${extensionName}/index.qext`, `./${extensionName}/${extensionName}.qext`);
+    fs.renameSync(`./${extensionName}/index.js`, `./${extensionName}/${extensionName}.js`);
+  }
 }
