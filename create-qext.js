@@ -61,6 +61,7 @@ function copySourceFiles(serverEnvironment) {
   if(serverEnvironment){
     fs.copySync(path.resolve(__dirname, './server-source'), `./${extensionName}/src`);
     fs.copySync(path.resolve(__dirname, './config'), `./${extensionName}/config`);
+    fs.copySync(path.resolve(__dirname, './.babelrc'), `./${extensionName}/.babelrc`);
   } else {
     fs.copySync(path.resolve(__dirname, './desktop-source'), `./${extensionName}`);
     fs.renameSync(`./${extensionName}/index.qext`, `./${extensionName}/${extensionName}.qext`);
